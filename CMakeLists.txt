@@ -5,9 +5,12 @@ project( ${PROJECTNAME} )
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/CMakeModules )
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+find_package(EIGEN REQUIRED)
+find_package(GTSAM REQUIRED)
+MESSAGE(STATUS "Found GTSAM on GTSAM_INCLUDE_DIR ${GTSAM_INCLUDE_DIR}")
 find_package( OpenCV REQUIRED )
 
-include_directories( ${OpenCV_INCLUDE_DIRS} )
+include_directories( ${CMAKE_SOURCE_DIR}/src ${OpenCV_INCLUDE_DIRS} ${GTSAM_INCLUDE_DIR})
 
 file(GLOB viso
     "src/*.h"
@@ -25,3 +28,13 @@ file(GLOB viso
 )
 add_executable( euroc-vo ${viso} )
 target_link_libraries( euroc-vo ${OpenCV_LIBS} )
+
+
+#----------------------------
+#	Unit tests
+#----------------------------
+add_subdirectory(./external/googletest)
+enable_testing()
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+add_subdirectory(tests)

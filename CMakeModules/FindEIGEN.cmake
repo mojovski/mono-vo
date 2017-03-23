@@ -1,0 +1,2 @@
+MESSAGE(STATUS "INCLUDING Eigen")
+INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/external/gtsam/3rdparty/Eigen/")
