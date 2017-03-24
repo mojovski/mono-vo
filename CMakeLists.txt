@@ -26,7 +26,7 @@ file(GLOB viso
     "src/*.h"
     "src/mono-vo-euroc.cpp"
 )
-add_executable( euroc-vo ${viso} )
+add_executable( euroc-vo ${viso} src/GravityBiasSeparator.cpp src/GravityBiasSeparator.h)
 target_link_libraries( euroc-vo ${OpenCV_LIBS} )
 
 

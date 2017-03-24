@@ -41,8 +41,8 @@ static const Vector3 kGravityAlongNavZDown(0, 0, kGravity);
 // Realistic MEMS white noise characteristics. Angular and velocity random walk
 // expressed in degrees respectively m/s per sqrt(hr).
 auto radians = [](double t) { return t * M_PI / 180; };
-static const double kGyroSigma = radians(0.5) / 60;  // 0.5 degree ARW
-static const double kAccelSigma = 0.1 / 60;          // 10 cm VRW
+static const double kGyroSigma = 3e-6; //radians(0.5) / 60;  // 0.5 degree ARW
+static const double kAccelSigma = 0.004; //0.1 / 60;          // 10 cm VRW
 
 namespace testing {
 
