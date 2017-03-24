@@ -103,11 +103,13 @@ TEST(ManifoldPreintegration, computePose)
         Vector3 acc_without_g=acc-current_g;
         //omega=omega-w_bias;
         //std::cout << "\n " << t << " - \nacc: \n" << acc << "\nomega:\n" << omega << "\n";
+        std::cout << acc_without_g(2) << "\t";
         pim.integrateMeasurement(acc_without_g, omega, dt);
         last_t=t;
         //pim.update()
 
     }
+    std::cout <<"\n";
     //the gt pose from the leica ds:
     CSVReader leica;
     //leica.read("/home/eugen/datasets/EuRec/mav0/leica0/data.csv");
