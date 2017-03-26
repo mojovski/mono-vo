@@ -35,7 +35,7 @@ static const Bias kZeroBiasHat, kZeroBias;
 static const Vector3 kZeroOmegaCoriolis(0, 0, 0);
 static const Vector3 kNonZeroOmegaCoriolis(0, 0.1, 0.1);
 
-static const double kGravity = 10;
+static const double kGravity = 0.0; //10;
 static const Vector3 kGravityAlongNavZDown(0, 0, kGravity);
 
 // Realistic MEMS white noise characteristics. Angular and velocity random walk

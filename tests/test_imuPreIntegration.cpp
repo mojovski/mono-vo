@@ -48,7 +48,7 @@ TEST(ManifoldPreintegration, computePose)
 
     CSVReader imureader;
     //imureader.read("/home/eugen/datasets/EuRec/mav0/imu0/data.csv");
-    std::string imufile=std::string(TEST_DIR)+std::string("../datasets/eurec/MH1/imu0.csv");
+    std::string imufile=std::string(TEST_DIR)+std::string("/../datasets/eurec/MH1/imu0.csv");
     imureader.read(imufile.c_str());
     CSVReader::LinesType lines=imureader.lines;
 
@@ -61,18 +61,28 @@ TEST(ManifoldPreintegration, computePose)
     std::cout << "\ng: "<< g <<
               "\nacc_bias: " << acc_bias <<
         "\nw: " << w_bias << "\ng_cov:\n" << g_cov << "\nw_cov: " << w_cov << "\n\n" << std::endl;
+    g=g+acc_bias;
     //Matrix33 acc_cov; acc_cov.setZero();
     //for (int i=0; i<3; i++)
     //    acc_cov(i,i)=std::sqrt(cov(i,i));
 
+    /*
+     * boost::shared_ptr<PreintegrationParams> params=new PreintegrationParams(g);
+    params->gyroscopeCovariance = kGyroSigma *  I_3x3;
+    params->accelerometerCovariance = kAccelSigma *  I_3x3;
+    params->integrationCovariance = 0.0002 * I_3x3;
+     */
+
     boost::shared_ptr<PreintegrationParams> params=testing::Params();
+    //params->n_gravity=g;
     //params->accelerometerCovariance=g_cov;
     //params->gyroscopeCovariance=w_cov;
 
     ManifoldPreintegration pim(params);
     //TangentPreintegration pim(params);
     NavState x1, x2;
-    imuBias::ConstantBias bias(acc_bias, w_bias);
+    Vector3 nullbias(0,0,0);
+    imuBias::ConstantBias bias(nullbias, w_bias);
 
     Pose3 prior_pose; //identity, t=0
     Vector3 prior_velocity;
@@ -95,7 +105,7 @@ TEST(ManifoldPreintegration, computePose)
         }
 
         double dt=(t-last_t)/1e9;
-        //acc=acc-acc_bias;
+        //acc=acc-acc_bias; use the constBiasClass for this: ConstantBias(acc_bias, w_bias)
         //rotate the gravity vector by the current pose rotation
         NavState pose=pim.predict(prev_state, bias);
         //std::cout << "Integrated pose: " << pose;
@@ -106,6 +116,7 @@ TEST(ManifoldPreintegration, computePose)
         //std::cout << "\n " << t << " - \nacc: \n" << acc << "\nomega:\n" << omega << "\n";
         std::cout << acc_without_g(2) << "\t";
         pim.integrateMeasurement(acc_without_g, omega, dt);
+        //pim.integrateMeasurement(acc, omega, dt);
         last_t=t;
         //pim.update()
 
@@ -114,7 +125,7 @@ TEST(ManifoldPreintegration, computePose)
     //the gt pose from the leica ds:
     CSVReader leica;
     //leica.read("/home/eugen/datasets/EuRec/mav0/leica0/data.csv");
-    std::string leicafile=std::string(TEST_DIR)+std::string("../datasets/eurec/MH1/leica0.csv");
+    std::string leicafile=std::string(TEST_DIR)+std::string("/../datasets/eurec/MH1/leica0.csv");
     leica.read(leicafile.c_str());
     Vector3 p0(std::atof(leica.lines[702].elements[1].c_str()),
                std::atof(leica.lines[702].elements[2].c_str()),
