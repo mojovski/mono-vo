@@ -61,7 +61,7 @@ TEST(ManifoldPreintegration, computePose)
     std::cout << "\ng: "<< g <<
               "\nacc_bias: " << acc_bias <<
         "\nw: " << w_bias << "\ng_cov:\n" << g_cov << "\nw_cov: " << w_cov << "\n\n" << std::endl;
-    g=g+acc_bias;
+    //g=g+acc_bias;
     //Matrix33 acc_cov; acc_cov.setZero();
     //for (int i=0; i<3; i++)
     //    acc_cov(i,i)=std::sqrt(cov(i,i));
@@ -82,7 +82,7 @@ TEST(ManifoldPreintegration, computePose)
     //TangentPreintegration pim(params);
     NavState x1, x2;
     Vector3 nullbias(0,0,0);
-    imuBias::ConstantBias bias(nullbias, w_bias);
+    imuBias::ConstantBias bias(acc_bias, w_bias);
 
     Pose3 prior_pose; //identity, t=0
     Vector3 prior_velocity;
