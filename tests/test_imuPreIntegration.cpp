@@ -48,7 +48,8 @@ TEST(ManifoldPreintegration, computePose)
 
     CSVReader imureader;
     //imureader.read("/home/eugen/datasets/EuRec/mav0/imu0/data.csv");
-    imureader.read("/media/eugen/DATAPART1/SensorDaten/EuRoc/mav0/imu0/data.csv");
+    std::string imufile=std::string(TEST_DIR)+std::string("../datasets/eurec/MH1/imu0.csv");
+    imureader.read(imufile.c_str());
     CSVReader::LinesType lines=imureader.lines;
 
     //estimate the noise and  gravity vector during the zero-movement
@@ -113,7 +114,8 @@ TEST(ManifoldPreintegration, computePose)
     //the gt pose from the leica ds:
     CSVReader leica;
     //leica.read("/home/eugen/datasets/EuRec/mav0/leica0/data.csv");
-    leica.read("/media/eugen/DATAPART1/SensorDaten/EuRoc/mav0/leica0/data.csv");
+    std::string leicafile=std::string(TEST_DIR)+std::string("../datasets/eurec/MH1/leica0.csv");
+    leica.read(leicafile.c_str());
     Vector3 p0(std::atof(leica.lines[702].elements[1].c_str()),
                std::atof(leica.lines[702].elements[2].c_str()),
                std::atof(leica.lines[702].elements[3].c_str())
