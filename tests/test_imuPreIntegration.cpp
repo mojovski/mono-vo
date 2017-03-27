@@ -19,6 +19,7 @@
 #include <gtsam/navigation/CombinedImuFactor.h>
 #include <GravityBiasSeparator.h>
 
+
 namespace testing {
 // Create default parameters with Z-down and above noise parameters
     static boost::shared_ptr<PreintegrationParams> Params() {
