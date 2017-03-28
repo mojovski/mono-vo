@@ -10,6 +10,9 @@ find_package(GTSAM REQUIRED)
 MESSAGE(STATUS "Found GTSAM on GTSAM_INCLUDE_DIR ${GTSAM_INCLUDE_DIR}")
 find_package( OpenCV REQUIRED )
 
+find_package(FLANN REQUIRED)
+MESSAGE(STATUS "FLANN_FOUND: ${FLANN_FOUND}, FLANN_INCLUDE_DIRS ${FLANN_INCLUDE_DIRS}, FLANN_LIBRARIES: ${FLANN_LIBRARIES}, FLANN_DEFINITIONS: ${FLANN_DEFINITIONS}")
+
 include_directories( ${CMAKE_SOURCE_DIR}/src ${OpenCV_INCLUDE_DIRS} ${GTSAM_INCLUDE_DIR})
 
 file(GLOB viso
@@ -30,6 +33,11 @@ add_executable( euroc-vo ${viso}  src/GravityBiasSeparator.h)
 target_link_libraries( euroc-vo ${OpenCV_LIBS} )
 
 
+#-------------------------
+#	Performance tests
+#------------------------
+add_subdirectory(perf)
+
 #----------------------------
 #	Unit tests
 #----------------------------
@@ -38,3 +46,5 @@ enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 add_subdirectory(tests)
+
+

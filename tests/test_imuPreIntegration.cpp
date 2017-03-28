@@ -13,8 +13,7 @@
 #include <boost/bind.hpp>
 
 #include "ImuFactorTesting.h"
-#include "../src/csv.h"
-#include <csv.h>
+#include <CSVReader.h>
 #include <gtsam/inference/Symbol.h>
 #include <gtsam/navigation/CombinedImuFactor.h>
 #include <GravityBiasSeparator.h>
